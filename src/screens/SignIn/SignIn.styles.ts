@@ -2,13 +2,15 @@ import styled, { css } from 'styled-components/native';
 
 export const Container = styled.View`
   flex: 1;
-  justify-content: center;
   align-items: center;
-  position: relative;
+  justify-content: center;
+  flex-direction: column;
 `;
 
 export const Content = styled.View`
   margin-top: -100px;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const Title = styled.Text`
@@ -17,6 +19,8 @@ export const Title = styled.Text`
     font-weight: ${theme.font.bold};
     color: ${theme.colors.lightGray};
     margin-bottom: ${theme.spacings.xsmall};
+    font-family: ${theme.font.family.primaryBold};
+    line-height: ${theme.spacings.large};
     text-align: center;
   `}
 `;
@@ -26,11 +30,12 @@ export const Description = styled.Text`
     color: ${theme.colors.lightGray};
     font-weight: ${theme.font.light};
     margin-bottom: ${theme.spacings.small};
+    font-family: ${theme.font.family.secundaryRegular};
+    line-height: ${theme.spacings.small};
     text-align: center;
   `}
 `;
 
 export const Image = styled.Image`
   width: 100%;
-  height: 360px;
 `;

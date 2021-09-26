@@ -4,8 +4,11 @@ export default {
   },
   font: {
     family: {
-      primary: 'Rajdhani',
-      secundary: 'Inter'
+      primaryRegular: 'Rajdhani_Regular',
+      primaryMedium: 'Rajdhani_500',
+      primaryBold: 'Rajdhani_700',
+      secundaryRegular: 'Inter_Regular',
+      secundaryMedium: 'Inter_500'
     },
     thin: 300,
     light: 400,
@@ -36,7 +39,8 @@ export default {
     box2: '#171F52',
     stroke1: '#243189',
     stroke2: '#1B2565',
-    line: '#991F36'
+    line: '#991F36',
+    overlay: 'rgba(0, 0, 0, 0.7)'
   },
   spacings: {
     xxsmall: '8px',

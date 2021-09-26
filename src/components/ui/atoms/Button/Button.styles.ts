@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import { ButtonProps } from './Button';
+import { RectButton } from 'react-native-gesture-handler';
+import Icon from '../../../../../assets/svg/discord.svg';
 
 type WrapperProps = Pick<ButtonProps, 'size'>;
 
@@ -18,7 +20,7 @@ const wrapperModifiers = {
   `
 };
 
-export const Button = styled.TouchableOpacity<WrapperProps>`
+export const Button = styled(RectButton)<WrapperProps>`
   ${({ theme, size }) => css`
     background-color: ${theme.colors.primary};
     border-radius: ${theme.border.radius};
@@ -32,6 +34,7 @@ export const Button = styled.TouchableOpacity<WrapperProps>`
 export const Text = styled.Text`
   ${({ theme }) => css`
     color: ${theme.colors.lightGray};
+    text-shadow: ${`0 0 8px ${theme.colors.lightGray}`};
     font-size: ${theme.font.sizes.medium};
     text-align: center;
     flex: 1;
@@ -49,4 +52,11 @@ export const BoxIcon = styled.View`
   `}
 `;
 
-export const Icon = styled.Image``;
+export const IconDiscord = styled(Icon)`
+  ${({ theme }) => css`
+    width: 24px;
+    height: 18px;
+    color: ${theme.colors.white};
+    text-shadow: ${`0 0 8px ${theme.colors.white}`};
+  `}
+`;

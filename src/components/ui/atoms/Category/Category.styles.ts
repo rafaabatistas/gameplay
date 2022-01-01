@@ -11,7 +11,7 @@ export const Wrapper = styled(RectButton)<ContentProps>`
     height: 120px;
     align-items: center;
     justify-content: center;
-    opacity: ${checked ? 1 : 1};
+    opacity: ${checked ? 1 : 0.4};
     border-radius: ${theme.border.radius};
     margin-right: ${theme.spacings.xxsmall};
   `}

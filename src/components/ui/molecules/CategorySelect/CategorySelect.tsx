@@ -4,7 +4,7 @@ import React from 'react';
 
 import { Category } from '../../atoms/Category/Category';
 
-import { categories } from '../../../../utils/categories';
+import { categories } from './categories.mock';
 
 export type CategorySelectProps = {
   categorySelected: string;

@@ -1,7 +1,7 @@
-import RankedIcon from '../../assets/svg/ranked.svg';
-import DuelIcon from '../../assets/svg/duel.svg';
-import FunIcon from '../../assets/svg/fun.svg';
-import TrainingIcon from '../../assets/svg/training.svg';
+import RankedIcon from '../../../../../assets/svg/ranked.svg';
+import DuelIcon from '../../../../../assets/svg/duel.svg';
+import FunIcon from '../../../../../assets/svg/fun.svg';
+import TrainingIcon from '../../../../../assets/svg/training.svg';
 
 export const categories = [
   { id: '1', title: 'Ranqueada', icon: RankedIcon },

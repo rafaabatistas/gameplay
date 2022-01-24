@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import { RectButton } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
+
 import { CategoryProps } from './Category';
 
 type ContentProps = Pick<CategoryProps, 'checked'>;

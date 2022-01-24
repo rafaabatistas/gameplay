@@ -12,6 +12,7 @@ export const Home = () => {
   const handleCategorySelected = (id: string) => {
     id === category ? setCategory('') : setCategory(id);
   };
+
   return (
     <S.Container>
       <S.Header>

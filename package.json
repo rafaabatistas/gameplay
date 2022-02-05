@@ -43,6 +43,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@react-native-async-storage/async-storage": "^1.15.17",
     "@storybook/addon-actions": "^5.3",
     "@storybook/addon-knobs": "^5.3",
     "@storybook/addon-links": "^5.3",

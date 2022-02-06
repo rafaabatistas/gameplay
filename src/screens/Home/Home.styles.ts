@@ -16,3 +16,14 @@ export const Header = styled.View`
     margin-bottom: ${theme.spacings.large};
   `}
 `;
+
+export const Content = styled.View`
+  margin-top: 42px;
+`;
+
+export const Matches = styled.FlatList`
+  ${({ theme }) => css`
+    margin-top: ${theme.spacings.small};
+    margin-left: ${theme.spacings.small};
+  `}
+`;

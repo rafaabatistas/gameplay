@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { Home } from '../screens/Home/Home';
 import { SignIn } from '../screens/SignIn/SignIn';
+import { AppointmentDetails } from '../screens/AppointmentDetails/AppointmentDetails';
 import { Storybook } from '../screens/Storybook/Storybook';
 
 import theme from '../styles/theme';
@@ -22,5 +23,6 @@ export const AuthRoutes = () => (
     <Screen name="SignIn" component={SignIn} />
     <Screen name="Home" component={Home} />
     <Screen name="Storybook" component={Storybook} />
+    <Screen name="AppointmentDetails" component={AppointmentDetails} />
   </Navigator>
 );

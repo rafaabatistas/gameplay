@@ -20,7 +20,7 @@ export const Home = () => {
   };
 
   return (
-    <S.Container>
+    <S.Wrapper>
       <S.Header>
         <Profile />
         <ButtonAdd />
@@ -38,6 +38,6 @@ export const Home = () => {
           />
         </S.Content>
       </View>
-    </S.Container>
+    </S.Wrapper>
   );
 };

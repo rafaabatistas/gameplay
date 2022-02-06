@@ -28,7 +28,7 @@ export type Data = RectButtonProps & {
 
 export type AppointmentProps = {
   data: Data;
-  onPress: () => void;
+  onPress?: () => void;
 };
 
 const uri =

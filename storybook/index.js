@@ -22,6 +22,8 @@ configure(() => {
   require('../src/components/ui/molecules/ListHeader/ListHeader.stories.tsx');
   require('../src/components/ui/molecules/Profile/Profile.stories.tsx');
   require('../src/components/ui/molecules/Appointment/Appointment.stories.tsx');
+  require('../src/components/ui/molecules/Header/Header.stories.tsx');
+  require('../src/components/ui/molecules/Member/Member.stories.tsx');
 }, module);
 
 const StorybookUIRoot = getStorybookUI({

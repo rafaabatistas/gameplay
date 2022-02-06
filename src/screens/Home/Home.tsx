@@ -2,6 +2,7 @@ import * as S from './Home.styles';
 
 import React, { useState } from 'react';
 import { View } from 'react-native';
+import { CommonActions, useNavigation } from '@react-navigation/native';
 
 import { Profile } from '../../components/ui/molecules/Profile/Profile';
 import { ButtonAdd } from '../../components/ui/atoms/ButtonAdd/ButtonAdd';
@@ -14,9 +15,14 @@ import appointments from './home.mock';
 
 export const Home = () => {
   const [category, setCategory] = useState('');
+  const navigation = useNavigation();
 
   const handleCategorySelected = (id: string) => {
     id === category ? setCategory('') : setCategory(id);
+  };
+
+  const handleAppointmentDetails = () => {
+    navigation.dispatch(CommonActions.navigate({ name: 'AppointmentDetails' }));
   };
 
   return (
@@ -32,7 +38,7 @@ export const Home = () => {
           <S.Matches<React.ElementType>
             data={appointments}
             keyExtractor={(item: Data) => item.id}
-            renderItem={({ item }: { item: Data }) => <Appointment data={item} />}
+            renderItem={({ item }: { item: Data }) => <Appointment data={item} onPress={handleAppointmentDetails} />}
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={() => <ListDivider />}
           />

@@ -5,6 +5,8 @@ import { Home } from '../screens/Home/Home';
 import { SignIn } from '../screens/SignIn/SignIn';
 import { Storybook } from '../screens/Storybook/Storybook';
 
+import theme from '../styles/theme';
+
 const { Navigator, Screen } = createNativeStackNavigator();
 
 export const AuthRoutes = () => (
@@ -13,7 +15,7 @@ export const AuthRoutes = () => (
     screenOptions={{
       headerShown: false,
       contentStyle: {
-        backgroundColor: 'transparent'
+        backgroundColor: theme.colors.gradientBg2
       }
     }}
   >

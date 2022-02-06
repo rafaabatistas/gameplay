@@ -19,6 +19,7 @@ export default {
       small: '13px',
       medium: '15px',
       xmedium: '18px',
+      xxmedium: '20px',
       big: '24px',
       large: '28px',
       extra: '40px'

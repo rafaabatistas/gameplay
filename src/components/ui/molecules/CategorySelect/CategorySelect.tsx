@@ -9,12 +9,20 @@ import { categories } from './categories.mock';
 export type CategorySelectProps = {
   categorySelected: string;
   setCategory: (id: string) => void;
+  hasCheckBox?: boolean;
 };
 
-export const CategorySelect = ({ categorySelected, setCategory }: CategorySelectProps) => (
+export const CategorySelect = ({ categorySelected, setCategory, hasCheckBox = false }: CategorySelectProps) => (
   <S.Wrapper horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={{ paddingRight: 40 }}>
     {categories.map(({ id, title, icon }) => (
-      <Category key={id} title={title} icon={icon} checked={id === categorySelected} onPress={() => setCategory(id)} />
+      <Category
+        key={id}
+        icon={icon}
+        title={title}
+        hasCheckBox={hasCheckBox}
+        onPress={() => setCategory(id)}
+        checked={id === categorySelected}
+      />
     ))}
   </S.Wrapper>
 );

@@ -4,6 +4,9 @@ import React from 'react';
 
 export type GuildIconProps = {
   uri: string;
+  marginRight?: boolean;
 };
 
-export const GuildIcon = ({ uri }: GuildIconProps) => <S.Wrapper source={{ uri }} resizeMode="cover" />;
+export const GuildIcon = ({ uri, marginRight = true }: GuildIconProps) => (
+  <S.Wrapper marginRight={marginRight} source={{ uri }} resizeMode="cover" />
+);

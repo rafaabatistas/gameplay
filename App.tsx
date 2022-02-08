@@ -18,8 +18,8 @@ export default function App() {
   });
   return fontsLoaded ? (
     <ThemeProvider theme={theme}>
+      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
       <Container>
-        <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
         <Routes />
       </Container>
     </ThemeProvider>

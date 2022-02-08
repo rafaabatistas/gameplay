@@ -35,6 +35,9 @@ export const Text = styled.Text`
   ${({ theme }) => css`
     color: ${theme.colors.lightGray};
     text-shadow: ${`0 0 8px ${theme.colors.lightGray}`};
+    font-family: ${theme.font.family.secundaryRegular};
+    font-weight: ${theme.font.regular};
+    font-style: normal;
     font-size: ${theme.font.sizes.medium};
     text-align: center;
     flex: 1;

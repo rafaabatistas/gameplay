@@ -24,6 +24,8 @@ export const Title = styled.Text`
     text-align: center;
     font-family: ${theme.font.family.primaryBold};
     font-size: ${theme.font.sizes.xxmedium};
+    font-weight: ${theme.font.bold};
+    font-style: normal;
     color: ${theme.colors.lightGray};
   `}
 `;

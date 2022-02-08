@@ -25,11 +25,15 @@ export const Home = () => {
     navigation.dispatch(CommonActions.navigate({ name: 'AppointmentDetails' }));
   };
 
+  const handleAppointmentCreate = () => {
+    navigation.dispatch(CommonActions.navigate({ name: 'AppointmentCreate' }));
+  };
+
   return (
     <S.Wrapper>
       <S.Header>
         <Profile />
-        <ButtonAdd />
+        <ButtonAdd handlePress={handleAppointmentCreate} />
       </S.Header>
       <View>
         <CategorySelect categorySelected={category} setCategory={handleCategorySelected} />

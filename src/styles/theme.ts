@@ -44,6 +44,7 @@ export default {
     overlay: 'rgba(0, 0, 0, 0.7)'
   },
   spacings: {
+    reset: '0px',
     xxsmall: '8px',
     xsmall: '16px',
     small: '24px',

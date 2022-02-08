@@ -1,6 +1,9 @@
 import styled, { css } from 'styled-components/native';
 import { Container } from '../../components/ui/atoms/Container/Container.styles';
+import { Dimensions } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
+
+const { height } = Dimensions.get('window');
 
 export const Wrapper = styled(Container)`
   flex: 1;
@@ -20,11 +23,12 @@ export const Header = styled.View`
 `;
 
 export const Content = styled.View`
-  margin-top: 42px;
+  margin-top: 32px;
 `;
 
 export const Matches = styled.FlatList`
   ${({ theme }) => css`
+    height: ${height - 348}px;
     margin-top: ${theme.spacings.small};
     margin-left: ${theme.spacings.small};
   `}

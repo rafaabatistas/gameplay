@@ -1,7 +1,7 @@
 import * as S from './Home.styles';
 
 import React, { useState } from 'react';
-import { View } from 'react-native';
+import { FlatListProps } from 'react-native';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 
 import { Profile } from '../../components/ui/molecules/Profile/Profile';
@@ -35,19 +35,15 @@ export const Home = () => {
         <Profile />
         <ButtonAdd handlePress={handleAppointmentCreate} />
       </S.Header>
-      <View>
-        <CategorySelect categorySelected={category} setCategory={handleCategorySelected} />
-        <S.Content>
-          <ListHeader title="Partidas agendadas " totalNumberOfItems={2} />
-          <S.Matches<React.ElementType>
-            data={appointments}
-            keyExtractor={(item: Data) => item.id}
-            renderItem={({ item }: { item: Data }) => <Appointment data={item} onPress={handleAppointmentDetails} />}
-            showsVerticalScrollIndicator={false}
-            ItemSeparatorComponent={() => <ListDivider />}
-          />
-        </S.Content>
-      </View>
+      <CategorySelect categorySelected={category} setCategory={handleCategorySelected} />
+      <ListHeader title="Partidas agendadas " totalNumberOfItems={2} />
+      <S.Matches<React.ElementType<FlatListProps<any>>>
+        data={appointments}
+        keyExtractor={(item: Data) => item.id}
+        renderItem={({ item }: { item: Data }) => <Appointment data={item} onPress={handleAppointmentDetails} />}
+        showsVerticalScrollIndicator={false}
+        ItemSeparatorComponent={() => <ListDivider />}
+      />
     </S.Wrapper>
   );
 };

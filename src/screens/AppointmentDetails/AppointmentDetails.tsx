@@ -2,6 +2,7 @@ import * as S from './AppointmentDetails.styles';
 
 import React from 'react';
 import { Fontisto } from '@expo/vector-icons';
+import { FlatListProps } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 
 import { Button } from '../../components/ui/atoms/Button/Button';
@@ -34,7 +35,7 @@ export const AppointmentDetails = () => (
       </S.BannerContent>
     </S.Banner>
     <ListHeader title="Jogadores" totalNumberOfItems={3} />
-    <S.ListMembers<React.ElementType>
+    <S.ListMembers<React.ElementType<FlatListProps<any>>>
       data={members}
       keyExtractor={(item: DataMemberProps) => item.id}
       renderItem={({ item }: { item: DataMemberProps }) => <Member data={item} />}

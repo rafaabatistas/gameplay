@@ -18,6 +18,8 @@ configure(() => {
   require('../src/components/ui/atoms/GuildIcon/GuildIcon.stories.tsx');
   require('../src/components/ui/atoms/SmallInput/SmallInput.stories.tsx');
   require('../src/components/ui/atoms/TextArea/TextArea.stories.tsx');
+  require('../src/components/ui/atoms/Guild/Guild.stories.tsx');
+  require('../src/components/ui/atoms/ModalView/ModalView.stories.tsx');
 
   // Molecules
   require('../src/components/ui/molecules/CategorySelect/CategorySelect.stories.tsx');

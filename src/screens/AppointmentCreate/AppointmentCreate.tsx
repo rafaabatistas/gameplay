@@ -5,10 +5,13 @@ import { View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { RectButton } from 'react-native-gesture-handler';
 
+import { ListGuilds } from '../ListGuilds/ListGuilds';
 import { Button } from '../../components/ui/atoms/Button/Button';
 import { Header } from '../../components/ui/molecules/Header/Header';
 import { TextArea } from '../../components/ui/atoms/TextArea/TextArea';
+import { DataGuildProps } from '../../components/ui/atoms/Guild/Guild';
 import { GuildIcon } from '../../components/ui/atoms/GuildIcon/GuildIcon';
+import { ModalView } from '../../components/ui/atoms/ModalView/ModalView';
 import { SmallInput } from '../../components/ui/atoms/SmallInput/SmallInput';
 import { Container } from '../../components/ui/atoms/Container/Container.styles';
 import { CategorySelect } from '../../components/ui/molecules/CategorySelect/CategorySelect';
@@ -17,8 +20,17 @@ import theme from '../../styles/theme';
 
 export const AppointmentCreate = () => {
   const [category, setCategory] = useState('');
-  const uri =
-    'https://w7.pngwing.com/pngs/942/98/png-transparent-discord-computer-icons-teamspeak-computer-servers-others-miscellaneous-blue-smiley.png';
+  const [openGuildModal, setOpenGuildModal] = useState(false);
+  const [guild, setGuild] = useState<DataGuildProps>({ icon: '' } as DataGuildProps);
+
+  const handleOpenGuildModal = (status: boolean) => {
+    setOpenGuildModal(status);
+  };
+
+  const handleGuildSelect = (guild: DataGuildProps) => {
+    setGuild(guild);
+    handleOpenGuildModal(false);
+  };
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
@@ -31,12 +43,11 @@ export const AppointmentCreate = () => {
             </S.Label>
             <CategorySelect hasCheckBox categorySelected={category} setCategory={setCategory} />
             <S.Form>
-              <RectButton>
+              <RectButton onPress={() => handleOpenGuildModal(true)}>
                 <S.Select>
-                  {/* <S.Image /> */}
-                  <GuildIcon marginRight={false} uri={uri} />
+                  {guild.icon === '' ? <S.Image /> : <GuildIcon marginRight={false} uri={guild.icon} />}
                   <S.SelectBody>
-                    <S.Label>Selecione um servidor</S.Label>
+                    <S.Label>{guild.name ? guild.name : 'Selecione um servidor'}</S.Label>
                     <Feather name="chevron-right" color={theme.colors.lightGray} size={18} />
                   </S.SelectBody>
                 </S.Select>
@@ -76,6 +87,9 @@ export const AppointmentCreate = () => {
             </S.Form>
           </View>
         </ScrollView>
+        <ModalView visible={openGuildModal}>
+          <ListGuilds handleGuildSelect={handleGuildSelect} />
+        </ModalView>
       </Container>
     </KeyboardAvoidingView>
   );

@@ -31,16 +31,13 @@ export type AppointmentProps = {
   onPress?: () => void;
 };
 
-const uri =
-  'https://w7.pngwing.com/pngs/942/98/png-transparent-discord-computer-icons-teamspeak-computer-servers-others-miscellaneous-blue-smiley.png';
-
 export const Appointment = ({ data, ...rest }: AppointmentProps) => {
   const category = categories.find((item) => item.id === data.category);
   const { owner } = data.guild;
   return (
     <RectButton {...rest}>
       <S.Wrapper>
-        <GuildIcon uri={uri} />
+        <GuildIcon uri={data.guild.icon} />
         <S.Content>
           <S.Header>
             <S.Title>{data.guild.name}</S.Title>

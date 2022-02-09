@@ -5,6 +5,7 @@ export const Wrapper = styled.View`
   flex-direction: row;
   justify-content: space-between;
   padding: 0 24px;
+  margin-top: 24px;
 `;
 
 export const Title = styled.Text`

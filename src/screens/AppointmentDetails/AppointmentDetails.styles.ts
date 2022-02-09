@@ -2,11 +2,8 @@ import styled, { css } from 'styled-components/native';
 import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 export const Banner = styled.ImageBackground`
-  ${({ theme }) => css`
-    width: 100%;
-    height: 160px;
-    margin-bottom: ${theme.spacings.small};
-  `}
+  width: 100%;
+  height: 160px;
 `;
 
 export const BannerContent = styled.View`

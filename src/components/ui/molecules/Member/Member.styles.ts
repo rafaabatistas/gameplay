@@ -5,9 +5,12 @@ export type BulletStatusProps = {
 };
 
 export const Wrapper = styled.View`
-  width: 100%;
-  flex-direction: row;
-  align-items: center;
+  ${({ theme }) => css`
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: ${theme.spacings.xxsmall};
+  `}
 `;
 
 export const Title = styled.Text`

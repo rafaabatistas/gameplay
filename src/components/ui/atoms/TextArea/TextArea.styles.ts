@@ -40,6 +40,8 @@ export const TextArea = styled.TextInput`
     font-size: ${theme.font.sizes.medium};
     font-weight: ${theme.font.regular};
     color: ${theme.colors.lightGray};
-    text-align: center;
+    padding-horizontal: ${theme.spacings.xsmall};
+    padding-vertical: 20px;
+    text-align-vertical: top;
   `}
 `;

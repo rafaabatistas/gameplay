@@ -16,7 +16,7 @@ export const Container = styled(LinearGradient).attrs({
   end: { x: 0, y: 1 }
 })`
   flex: 1;
-  margin-top: 46px;
+  margin-top: 110px;
 `;
 
 export const Bar = styled.View`

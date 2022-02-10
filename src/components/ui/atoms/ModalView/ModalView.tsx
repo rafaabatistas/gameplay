@@ -9,7 +9,7 @@ export type ModalViewProps = ModalProps & {
 };
 
 export const ModalView = ({ children, closeModal, ...rest }: ModalViewProps) => (
-  <S.Wrapper transparent animationType="slide" {...rest}>
+  <S.Wrapper statusBarTranslucent transparent animationType="slide" {...rest}>
     <TouchableWithoutFeedback onPress={closeModal}>
       <S.Overlay>
         <S.Container>

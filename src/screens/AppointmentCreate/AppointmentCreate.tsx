@@ -87,7 +87,7 @@ export const AppointmentCreate = () => {
             </S.Form>
           </View>
         </ScrollView>
-        <ModalView visible={openGuildModal}>
+        <ModalView visible={openGuildModal} closeModal={() => setOpenGuildModal(false)}>
           <ListGuilds handleGuildSelect={handleGuildSelect} />
         </ModalView>
       </Container>

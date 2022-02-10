@@ -6,6 +6,7 @@ import theme from './src/styles/theme';
 
 import { StatusBar } from 'react-native';
 import { Routes } from './src/routes';
+import { AuthProvider } from './src/hooks/auth';
 import { Container } from './src/components/ui/atoms/Container/Container';
 
 export default function App() {
@@ -17,12 +18,14 @@ export default function App() {
     Rajdhani_Regular: require('./assets/fonts/rajdhani-v10-latin-regular.ttf')
   });
   return fontsLoaded ? (
-    <ThemeProvider theme={theme}>
-      <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
-      <Container>
-        <Routes />
-      </Container>
-    </ThemeProvider>
+    <AuthProvider>
+      <ThemeProvider theme={theme}>
+        <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+        <Container>
+          <Routes />
+        </Container>
+      </ThemeProvider>
+    </AuthProvider>
   ) : (
     <AppLoading />
   );

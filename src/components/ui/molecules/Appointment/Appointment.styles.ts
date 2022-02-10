@@ -1,9 +1,5 @@
 import styled, { css } from 'styled-components/native';
 
-type PlayersProps = {
-  owner: boolean;
-};
-
 export const Wrapper = styled.View`
   width: 100%;
   flex-direction: row;
@@ -64,11 +60,11 @@ export const PlayersInfo = styled.View`
   align-items: center;
 `;
 
-export const Player = styled.Text<PlayersProps>`
-  ${({ theme, owner }) => css`
+export const Player = styled.Text`
+  ${({ theme }) => css`
     font-family: ${theme.font.family.secundaryRegular};
     font-size: ${theme.font.sizes.small};
-    color: ${owner ? theme.colors.primary : theme.colors.green};
+    color: ${theme.colors.lightGray};
     margin-right: ${theme.spacings.small};
     margin-left: ${theme.spacings.xxsmall};
   `}

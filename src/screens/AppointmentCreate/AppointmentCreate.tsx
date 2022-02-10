@@ -41,7 +41,11 @@ export const AppointmentCreate = () => {
             <S.Form>
               <RectButton onPress={() => setOpenGuildModal(true)}>
                 <S.Select>
-                  {guild.icon === '' ? <S.Image /> : <GuildIcon marginRight={false} uri={guild.icon} />}
+                  {guild.icon === '' ? (
+                    <S.Image />
+                  ) : (
+                    <GuildIcon withBorder={false} marginRight={false} uri={guild.icon} />
+                  )}
                   <S.SelectBody>
                     <S.Label>{guild.name ? guild.name : 'Selecione um servidor'}</S.Label>
                     <Feather name="chevron-right" color={theme.colors.lightGray} size={18} />

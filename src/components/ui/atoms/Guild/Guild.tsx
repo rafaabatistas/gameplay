@@ -22,7 +22,7 @@ export type GuildProps = TouchableOpacityProps & {
 
 export const Guild = ({ data, handleGuildSelect, ...rest }: GuildProps) => (
   <S.Wrapper {...rest} activeOpacity={0.7} onPress={() => handleGuildSelect(data)}>
-    <GuildIcon uri={data.icon} />
+    <GuildIcon uri={data.icon} withBorder={false} />
     <S.Content>
       <View>
         <S.Title>{data.name}</S.Title>

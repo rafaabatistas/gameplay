@@ -23,13 +23,9 @@ export const AppointmentCreate = () => {
   const [openGuildModal, setOpenGuildModal] = useState(false);
   const [guild, setGuild] = useState<DataGuildProps>({ icon: '' } as DataGuildProps);
 
-  const handleOpenGuildModal = (status: boolean) => {
-    setOpenGuildModal(status);
-  };
-
   const handleGuildSelect = (guild: DataGuildProps) => {
     setGuild(guild);
-    handleOpenGuildModal(false);
+    setOpenGuildModal(false);
   };
 
   return (
@@ -43,7 +39,7 @@ export const AppointmentCreate = () => {
             </S.Label>
             <CategorySelect hasCheckBox categorySelected={category} setCategory={setCategory} />
             <S.Form>
-              <RectButton onPress={() => handleOpenGuildModal(true)}>
+              <RectButton onPress={() => setOpenGuildModal(true)}>
                 <S.Select>
                   {guild.icon === '' ? <S.Image /> : <GuildIcon marginRight={false} uri={guild.icon} />}
                   <S.SelectBody>

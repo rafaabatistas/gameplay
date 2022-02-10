@@ -17,7 +17,9 @@ export const BannerContent = styled.View`
 export const Title = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.font.family.primaryBold};
+    font-weight: ${theme.font.bold};
     font-size: ${theme.font.sizes.large};
+    font-style: normal;
     color: ${theme.colors.lightGray};
   `}
 `;
@@ -25,8 +27,11 @@ export const Title = styled.Text`
 export const Subtitle = styled.Text`
   ${({ theme }) => css`
     font-family: ${theme.font.family.secundaryRegular};
+    font-weight: ${theme.font.regular};
     font-size: ${theme.font.sizes.medium};
+    font-style: normal;
     color: ${theme.colors.lightGray};
+    line-height: 21px;
     text-align: left;
   `}
 `;

@@ -3,24 +3,19 @@ import * as S from './Appointment.styles';
 import React from 'react';
 import { RectButton, RectButtonProps } from 'react-native-gesture-handler';
 
+import { DataGuildProps } from '../../atoms/Guild/Guild';
 import { GuildIcon } from '../../atoms/GuildIcon/GuildIcon';
 
 import { categories } from '../CategorySelect/categories.mock';
 
-import theme from '../../.././../styles/theme';
 import PlayerSvg from '../../../../../assets/svg/player.svg';
 import CalendarSvg from '../../../../../assets/svg/calendar.svg';
 
-export type GuildProps = {
-  id: string;
-  name: string;
-  icon: string | null;
-  owner: boolean;
-};
+import theme from '../../.././../styles/theme';
 
 export type Data = RectButtonProps & {
   id: string;
-  guild: GuildProps;
+  guild: DataGuildProps;
   category: string;
   date: string;
   description: string;
@@ -33,7 +28,6 @@ export type AppointmentProps = {
 
 export const Appointment = ({ data, ...rest }: AppointmentProps) => {
   const category = categories.find((item) => item.id === data.category);
-  const { owner } = data.guild;
   return (
     <RectButton {...rest}>
       <S.Wrapper>
@@ -49,8 +43,8 @@ export const Appointment = ({ data, ...rest }: AppointmentProps) => {
               <S.Date>{data.date}</S.Date>
             </S.DateInfo>
             <S.PlayersInfo>
-              <PlayerSvg fill={owner ? theme.colors.primary : theme.colors.green} />
-              <S.Player owner={owner}>{owner ? 'Anfitrião' : 'Visitante'}</S.Player>
+              <PlayerSvg fill={theme.colors.primary} />
+              <S.Player>3</S.Player>
             </S.PlayersInfo>
           </S.Footer>
         </S.Content>

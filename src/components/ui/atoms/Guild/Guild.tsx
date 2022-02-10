@@ -13,6 +13,7 @@ export type DataGuildProps = {
   name: string;
   subtitle: string;
   icon: string | null;
+  numberMembers: number;
 };
 
 export type GuildProps = TouchableOpacityProps & {

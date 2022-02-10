@@ -26,7 +26,7 @@ export const Header = ({ title, action }: HeaderProps) => {
         <Feather name="arrow-left" size={24} color={theme.colors.lightGray} />
       </BorderlessButton>
       <S.Title>{title}</S.Title>
-      {!!action && <View>{action}</View>}
+      {action ? <View>{action}</View> : <S.Block />}
     </S.Wrapper>
   );
 };

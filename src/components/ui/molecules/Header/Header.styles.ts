@@ -29,3 +29,7 @@ export const Title = styled.Text`
     color: ${theme.colors.lightGray};
   `}
 `;
+
+export const Block = styled.View`
+  width: 24px;
+`;

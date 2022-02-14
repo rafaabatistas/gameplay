@@ -10,7 +10,7 @@ import theme from '../styles/theme';
 
 const { Navigator, Screen } = createNativeStackNavigator();
 
-export const AuthRoutes = () => (
+export const AppRoutes = () => (
   <Navigator
     initialRouteName="SignIn"
     screenOptions={{

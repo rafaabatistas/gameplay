@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components/native';
+import { Platform } from 'react-native';
 import { Container } from '../../components/ui/atoms/Container/Container.styles';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
@@ -14,7 +15,7 @@ export const Header = styled.View`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    margin-top: ${`${getStatusBarHeight() + 32}px`};
+    margin-top: ${`${Platform.OS === 'ios' ? getStatusBarHeight() + 36 : 56}px`};
     margin-bottom: ${theme.spacings.large};
   `}
 `;

@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { Platform } from 'react-native';
 import { getStatusBarHeight } from 'react-native-iphone-x-helper';
 
 export const Wrapper = styled(LinearGradient).attrs({
@@ -10,7 +11,7 @@ export const Wrapper = styled(LinearGradient).attrs({
   ${({ theme }) => css`
     width: 100%;
     height: 104px;
-    padding-top: ${`${getStatusBarHeight() + 16}px`};
+    padding-top: ${`${Platform.OS === 'ios' ? getStatusBarHeight() + 16 : 32}px`};
     padding-horizontal: ${theme.spacings.small};
     flex-direction: row;
     align-items: center;

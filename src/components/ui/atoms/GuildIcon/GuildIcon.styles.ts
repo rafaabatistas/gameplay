@@ -27,3 +27,14 @@ export const Image = styled.Image<ImageProps>`
     border-radius: ${theme.border.radius};
   `}
 `;
+
+export const BackgroundDiscord = styled.View`
+  ${({ theme }) => css`
+    width: 64px;
+    height: 64px;
+    align-items: center;
+    justify-content: center;
+    border-radius: ${theme.border.radius};
+    background-color: ${theme.colors.discord};
+  `}
+`;

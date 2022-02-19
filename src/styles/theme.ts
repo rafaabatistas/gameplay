@@ -41,6 +41,7 @@ export default {
     stroke1: '#243189',
     stroke2: '#1B2565',
     line: '#991F36',
+    discord: '#7289DA',
     overlay: 'rgba(0, 0, 0, 0.7)'
   },
   spacings: {

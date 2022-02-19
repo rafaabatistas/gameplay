@@ -1,6 +1,10 @@
 import styled, { css } from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
 
+import { SmallInputProps } from './SmallInput';
+
+type BackgroundError = Pick<SmallInputProps, 'error'>;
+
 export const BackgroundInput = styled(LinearGradient).attrs({
   colors: ['#171F52', '#1D2766'],
   start: { x: 0, y: 0 },
@@ -26,6 +30,17 @@ export const ContentInput = styled(LinearGradient).attrs({
     align-items: center;
     justify-content: center;
     border-radius: ${theme.border.radius};
+  `}
+`;
+
+export const BackgroundError = styled.View<BackgroundError>`
+  ${({ theme, error = false }) => css`
+    width: 64px;
+    height: 48px;
+    align-items: center;
+    justify-content: center;
+    border-radius: ${theme.border.radius};
+    background-color: ${error ? theme.colors.primary : 'rgba(0, 0, 0, 0)'};
   `}
 `;
 

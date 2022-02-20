@@ -1,10 +1,12 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import * as AuthSession from 'expo-auth-session';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import type User from '../@types/user';
 
 import api from '../services/api';
 import { userInfoFormatting } from '../utils/functions';
+import { COLLECTION_USERS } from '../configs/database';
 
 const { SCOPE } = process.env;
 const { CLIENT_ID } = process.env;
@@ -42,7 +44,10 @@ export const AuthProvider = (props: { children: JSX.Element }) => {
         api.defaults.headers.common['authorization'] = `Bearer ${params.access_token}`;
 
         const user = userInfoFormatting(userInfo);
-        setUser({ ...user, token: params.access_token });
+        const userData = { ...user, token: params.access_token };
+
+        await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
+        setUser(userData);
       }
     } catch (err) {
       console.log('erro', err);
@@ -51,6 +56,21 @@ export const AuthProvider = (props: { children: JSX.Element }) => {
       setLoading(false);
     }
   };
+
+  const loadUserStorageData = async () => {
+    const storage = await AsyncStorage.getItem(COLLECTION_USERS);
+
+    if (storage) {
+      const userLogged = JSON.parse(storage) as User;
+      api.defaults.headers.common['authorization'] = `Bearer ${userLogged.token}`;
+
+      setUser(userLogged);
+    }
+  };
+
+  useEffect(() => {
+    loadUserStorageData();
+  }, []);
 
   return <AuthContext.Provider value={{ user, signIn, loading, setUser }}>{props.children}</AuthContext.Provider>;
 };

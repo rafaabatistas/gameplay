@@ -18,14 +18,146 @@ import { CategorySelect } from '../../components/ui/molecules/CategorySelect/Cat
 
 import theme from '../../styles/theme';
 
+import {
+  validateDays,
+  validateMonth,
+  validateHours,
+  validateMinute,
+  validateDescription,
+  validateDayAndMonth
+} from '../../utils/validate';
+
+const { CDN_IMAGE } = process.env;
+
+type InputNameProps = 'day' | 'month' | 'hour' | 'minute' | 'description';
+
+type FormInputsProps = {
+  day: string;
+  month: string;
+  hour: string;
+  minute: string;
+  description: string;
+};
+
+type ArrayUpdateStateProps = {
+  day: (value: string, name: InputNameProps) => void;
+  month: (value: string, name: InputNameProps) => void;
+  hour: (value: string, name: InputNameProps) => void;
+  minute: (value: string, name: InputNameProps) => void;
+  description: (value: string, name: InputNameProps) => void;
+};
+
+type ArrayValidateProps = {
+  day: (value: string) => boolean;
+  month: (value: string) => boolean;
+  hour: (value: string) => boolean;
+  minute: (value: string) => boolean;
+  description: (value: string) => boolean;
+};
+
+type ValidateProps = {
+  dayIsValid: boolean;
+  monthIsValid: boolean;
+  hourIsValid: boolean;
+  minuteIsValid: boolean;
+  descriptionIsValid: boolean;
+};
+
 export const AppointmentCreate = () => {
   const [category, setCategory] = useState('');
   const [openGuildModal, setOpenGuildModal] = useState(false);
   const [guild, setGuild] = useState<DataGuildProps>({ icon: '' } as DataGuildProps);
+  const [buttonEnabled, setButtonEnabled] = useState(false);
+  const [validate, setValidate] = useState<ValidateProps>({
+    dayIsValid: false,
+    monthIsValid: false,
+    hourIsValid: false,
+    minuteIsValid: false,
+    descriptionIsValid: false
+  });
+  const [formInputs, setFormInputs] = useState<FormInputsProps>({
+    day: '',
+    month: '',
+    hour: '',
+    minute: '',
+    description: ''
+  });
 
   const handleGuildSelect = (guild: DataGuildProps) => {
     setGuild(guild);
     setOpenGuildModal(false);
+  };
+
+  const handleFormInputs = (value: string, name: InputNameProps) => {
+    const valuesInput = { ...formInputs, [name]: value };
+
+    setFormInputs(valuesInput);
+
+    const unfilledInputs = checkFilledInputs(valuesInput);
+    const checkingFillingDayAndMonth = checkFilledInputs({ day: valuesInput.day, month: valuesInput.month });
+
+    const arrayUpdateState: ArrayUpdateStateProps = {
+      day: validateFields,
+      month: validateFields,
+      hour: validateFields,
+      minute: validateFields,
+      description: validateFields
+    };
+
+    if (arrayUpdateState[name]) {
+      arrayUpdateState[name](value, name);
+    }
+
+    if (checkingFillingDayAndMonth.length === 0) {
+      checkingDayAndMonth(valuesInput.day, valuesInput.month);
+    }
+
+    if (unfilledInputs.length === 0) {
+      validationOfRequiredFields();
+    }
+  };
+
+  const validateFields = (value: string, name: InputNameProps) => {
+    const arrayValidate: ArrayValidateProps = {
+      day: validateDays,
+      month: validateMonth,
+      hour: validateHours,
+      minute: validateMinute,
+      description: validateDescription
+    };
+
+    const validateValue = arrayValidate[name];
+
+    if (validateValue) {
+      const isValid = validateValue(value);
+
+      setValidate({
+        ...validate,
+        [`${name}IsValid`]: !isValid
+      });
+    }
+  };
+
+  const checkFilledInputs = (valuesInputs: any) => {
+    const valuesInputsFormValidated = Object.keys(valuesInputs).filter((k) => valuesInputs[k] === '');
+    return valuesInputsFormValidated;
+  };
+
+  const checkingDayAndMonth = (day: string, month: string) => {
+    const isValid = validateDayAndMonth(day, month);
+
+    setValidate({
+      ...validate,
+      dayIsValid: !isValid
+    });
+  };
+
+  const validationOfRequiredFields = () => {
+    const validationOfRequiredFields = checkFilledInputs({ ...formInputs, ...guild, category: category });
+
+    if (validationOfRequiredFields.length === 0) {
+      setButtonEnabled(true);
+    }
   };
 
   return (
@@ -44,7 +176,11 @@ export const AppointmentCreate = () => {
                   {guild.icon === '' ? (
                     <S.Image />
                   ) : (
-                    <GuildIcon withBorder={false} marginRight={false} uri={guild.icon} />
+                    <GuildIcon
+                      withBorder={false}
+                      marginRight={false}
+                      uri={`${CDN_IMAGE}/icons/${guild.id}/${guild.icon}.png`}
+                    />
                   )}
                   <S.SelectBody>
                     <S.Label>{guild.name ? guild.name : 'Selecione um servidor'}</S.Label>
@@ -58,9 +194,19 @@ export const AppointmentCreate = () => {
                     Dia e mês
                   </S.Label>
                   <S.BoxFields>
-                    <SmallInput maxLength={2} />
+                    <SmallInput
+                      maxLength={2}
+                      value={formInputs.day}
+                      error={validate.dayIsValid}
+                      onChangeText={(value: string) => handleFormInputs(value, 'day')}
+                    />
                     <S.Divider>/</S.Divider>
-                    <SmallInput maxLength={2} />
+                    <SmallInput
+                      maxLength={2}
+                      value={formInputs.month}
+                      error={validate.monthIsValid}
+                      onChangeText={(value: string) => handleFormInputs(value, 'month')}
+                    />
                   </S.BoxFields>
                 </View>
                 <View>
@@ -68,9 +214,19 @@ export const AppointmentCreate = () => {
                     Horário
                   </S.Label>
                   <S.BoxFields>
-                    <SmallInput maxLength={2} />
+                    <SmallInput
+                      maxLength={2}
+                      value={formInputs.hour}
+                      error={validate.hourIsValid}
+                      onChangeText={(value: string) => handleFormInputs(value, 'hour')}
+                    />
                     <S.Divider>:</S.Divider>
-                    <SmallInput maxLength={2} />
+                    <SmallInput
+                      maxLength={2}
+                      value={formInputs.minute}
+                      error={validate.minuteIsValid}
+                      onChangeText={(value: string) => handleFormInputs(value, 'minute')}
+                    />
                   </S.BoxFields>
                 </View>
               </S.BoxLabel>
@@ -80,9 +236,19 @@ export const AppointmentCreate = () => {
                 </S.Label>
                 <S.CaracteresLimit>Max 100 caracteres</S.CaracteresLimit>
               </S.BoxLabel>
-              <TextArea maxLength={100} multiline numberOfLines={5} autoCorrect={false} />
+              <TextArea
+                multiline
+                maxLength={100}
+                numberOfLines={5}
+                name="description"
+                autoCorrect={false}
+                value={formInputs.description}
+                onChangeText={(value: string) => handleFormInputs(value, 'description')}
+              />
               <S.ButtonBox>
-                <Button size="large">Agendar</Button>
+                <Button enabled={buttonEnabled} size="large">
+                  Agendar
+                </Button>
               </S.ButtonBox>
             </S.Form>
           </View>

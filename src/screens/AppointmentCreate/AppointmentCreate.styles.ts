@@ -96,7 +96,7 @@ export const ButtonBox = styled.View`
     flex-direction: row;
     justify-content: center;
     align-self: flex-end;
-    padding: ${theme.spacings.xsmall};
+    padding: ${theme.spacings.xsmall} 0;
     margin-bottom: ${getBottomSpace()};
   `}
 `;

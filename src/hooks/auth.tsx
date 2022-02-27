@@ -40,7 +40,7 @@ export const AuthProvider = (props: { children: JSX.Element }) => {
       const { type, params } = (await AuthSession.startAsync({ authUrl })) as AuthorizationResponse;
 
       if (type === 'success' && !params.error) {
-        const userInfo = await api.get('/users/@me');
+        const userInfo = await api.get('/users/@me', { headers: { authorization: `Bearer ${params.access_token}` } });
         api.defaults.headers.common['authorization'] = `Bearer ${params.access_token}`;
 
         const user = userInfoFormatting(userInfo);

@@ -21,11 +21,12 @@ const wrapperModifiers = {
 };
 
 export const Button = styled(RectButton)<WrapperProps>`
-  ${({ theme, size }) => css`
+  ${({ theme, size, enabled }) => css`
     background-color: ${theme.colors.primary};
     border-radius: ${theme.border.radius};
     align-items: center;
     flex-direction: row;
+    opacity: ${enabled ? 1 : 0.5};
 
     ${!!size && wrapperModifiers[size]}
   `}

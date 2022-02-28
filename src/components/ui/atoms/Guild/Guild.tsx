@@ -15,6 +15,7 @@ export type DataGuildProps = {
   name: string;
   subtitle?: string;
   icon: string | null;
+  owner: boolean;
   numberMembers: number;
 };
 

@@ -30,7 +30,7 @@
   ],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
-    "react-hooks/exhaustive-deps": "warn",
+    "react-hooks/exhaustive-deps": "off",
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "react/prop-types": "off",
     "@typescript-eslint/no-non-null-assertion": "off",

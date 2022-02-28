@@ -1,13 +1,12 @@
 import * as S from './LoadingSpinner.styles';
 
 import React from 'react';
+import LottieView from 'lottie-react-native';
 
-import { ActivityIndicator } from 'react-native';
-
-import theme from '../../../../styles/theme';
+import LoadingAnimation from '../../../../../assets/json/loading.json';
 
 export const LoadingSpinner = () => (
   <S.Wrapper>
-    <ActivityIndicator size="large" color={theme.colors.primary} />
+    <LottieView source={LoadingAnimation} autoPlay loop resizeMode="contain" />
   </S.Wrapper>
 );

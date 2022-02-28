@@ -3,9 +3,12 @@ import * as S from './AppointmentCreate.styles';
 import React, { useState } from 'react';
 import { View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import { RectButton } from 'react-native-gesture-handler';
+import { CommonActions, useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import uuid from 'react-native-uuid';
 
 import { ListGuilds } from '../ListGuilds/ListGuilds';
+import { RectButton } from 'react-native-gesture-handler';
 import { Button } from '../../components/ui/atoms/Button/Button';
 import { Header } from '../../components/ui/molecules/Header/Header';
 import { TextArea } from '../../components/ui/atoms/TextArea/TextArea';
@@ -17,6 +20,8 @@ import { Container } from '../../components/ui/atoms/Container/Container.styles'
 import { CategorySelect } from '../../components/ui/molecules/CategorySelect/CategorySelect';
 
 import theme from '../../styles/theme';
+
+import { COLLECTION_APPOINTMENTS } from '../../configs/database';
 
 import {
   validateDays,
@@ -64,6 +69,7 @@ type ValidateProps = {
 };
 
 export const AppointmentCreate = () => {
+  const navigation = useNavigation();
   const [category, setCategory] = useState('');
   const [openGuildModal, setOpenGuildModal] = useState(false);
   const [guild, setGuild] = useState<DataGuildProps>({ icon: '' } as DataGuildProps);
@@ -160,6 +166,29 @@ export const AppointmentCreate = () => {
     }
   };
 
+  const handleSubmit = async () => {
+    try {
+      const { day, month, hour, minute, description } = formInputs;
+      const newAppointment = {
+        id: uuid.v4(),
+        guild,
+        category,
+        date: `${day}/${month} às ${hour}:${minute}`,
+        description
+      };
+
+      const storage = await AsyncStorage.getItem(COLLECTION_APPOINTMENTS);
+      const appointments = storage ? JSON.parse(storage) : [];
+
+      await AsyncStorage.setItem(COLLECTION_APPOINTMENTS, JSON.stringify([...appointments, newAppointment]));
+
+      navigation.dispatch(CommonActions.navigate({ name: 'Home' }));
+    } catch (err) {
+      console.log(err);
+      throw new Error('Erro ao agendar uma nova jogatina');
+    }
+  };
+
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
       <Container>
@@ -246,7 +275,7 @@ export const AppointmentCreate = () => {
                 onChangeText={(value: string) => handleFormInputs(value, 'description')}
               />
               <S.ButtonBox>
-                <Button enabled={buttonEnabled} size="large">
+                <Button enabled={buttonEnabled} size="large" handle={() => handleSubmit()}>
                   Agendar
                 </Button>
               </S.ButtonBox>

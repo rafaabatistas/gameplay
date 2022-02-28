@@ -10,7 +10,7 @@ import { Guild, DataGuildProps, GuildProps } from '../../components/ui/atoms/Gui
 
 import api from '../../services/api';
 
-import animation from '../../../assets/json/error.json';
+import Animation from '../../../assets/json/error.json';
 
 export type ListGuildsProps = Pick<GuildProps, 'handleGuildSelect'>;
 
@@ -41,7 +41,10 @@ export const ListGuilds = ({ handleGuildSelect }: ListGuildsProps) => {
         <LoadingSpinner />
       ) : animationError ? (
         <S.BoxAnimation>
-          <LottieView source={animation} autoPlay loop={false} resizeMode="contain" />
+          <S.Animation>
+            <LottieView source={Animation} autoPlay loop={false} resizeMode="contain" />
+          </S.Animation>
+          <S.Description>Erro ao listar os servidores. Tente novamente mais tarde.</S.Description>
         </S.BoxAnimation>
       ) : (
         <S.ListGuilds<React.ElementType<FlatListProps<any>>>

@@ -9,7 +9,7 @@ export type DataMemberProps = {
   id: string;
   username: string;
   avatar_url: string;
-  status: string;
+  status: 'online' | 'offline' | 'idle' | 'dnd';
 };
 
 export type MemberProps = {
@@ -17,7 +17,12 @@ export type MemberProps = {
 };
 
 export const Member = ({ data }: MemberProps) => {
-  const isOnline = data.status === 'online';
+  const arrayStatus = {
+    online: 'Online',
+    offline: 'Offline',
+    idle: 'Ausente',
+    dnd: 'Não pertube'
+  };
 
   return (
     <S.Wrapper>
@@ -25,8 +30,8 @@ export const Member = ({ data }: MemberProps) => {
       <View>
         <S.Title>{data.username}</S.Title>
         <S.StatusBox>
-          <S.BulletStatus isOnline={isOnline} />
-          <S.Status>{isOnline ? 'Disponível' : 'Indisponível'}</S.Status>
+          <S.BulletStatus status={data.status} />
+          <S.Status>{arrayStatus[data.status]}</S.Status>
         </S.StatusBox>
       </View>
     </S.Wrapper>

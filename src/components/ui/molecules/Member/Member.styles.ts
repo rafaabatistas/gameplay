@@ -1,7 +1,19 @@
-import styled, { css } from 'styled-components/native';
+import styled, { css, DefaultTheme } from 'styled-components/native';
+import { DataMemberProps } from './Member';
 
-export type BulletStatusProps = {
-  isOnline: boolean;
+const bulletModifiers = {
+  online: (theme: DefaultTheme) => css`
+    background-color: ${theme.colors.green};
+  `,
+  offline: (theme: DefaultTheme) => css`
+    background-color: ${theme.colors.primary};
+  `,
+  idle: (theme: DefaultTheme) => css`
+    background-color: ${theme.colors.brown};
+  `,
+  dnd: (theme: DefaultTheme) => css`
+    background-color: ${theme.colors.line};
+  `
 };
 
 export const Wrapper = styled.View`
@@ -26,12 +38,13 @@ export const StatusBox = styled.View`
   align-items: center;
 `;
 
-export const BulletStatus = styled.View<BulletStatusProps>`
-  ${({ theme, isOnline }) => css`
+export const BulletStatus = styled.View<Pick<DataMemberProps, 'status'>>`
+  ${({ theme, status }) => css`
     width: 8px;
     height: 8px;
     border-radius: ${theme.border.radius};
-    background-color: ${isOnline ? theme.colors.green : theme.colors.primary};
+
+    ${!!status && bulletModifiers[status](theme)}
   `}
 `;
 

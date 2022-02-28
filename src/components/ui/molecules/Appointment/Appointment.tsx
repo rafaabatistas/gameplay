@@ -13,7 +13,9 @@ import CalendarSvg from '../../../../../assets/svg/calendar.svg';
 
 import theme from '../../.././../styles/theme';
 
-export type Data = RectButtonProps & {
+const { CDN_IMAGE } = process.env;
+
+export type AppointmentData = RectButtonProps & {
   id: string;
   guild: DataGuildProps;
   category: string;
@@ -22,16 +24,17 @@ export type Data = RectButtonProps & {
 };
 
 export type AppointmentProps = {
-  data: Data;
+  data: AppointmentData;
   onPress?: () => void;
 };
 
 export const Appointment = ({ data, ...rest }: AppointmentProps) => {
   const category = categories.find((item) => item.id === data.category);
+  const uri = data.guild.icon !== null ? `${CDN_IMAGE}/icons/${data.guild.id}/${data.guild.icon}.png` : null;
   return (
     <RectButton {...rest}>
       <S.Wrapper>
-        <GuildIcon uri={data.guild.icon} />
+        <GuildIcon uri={uri} />
         <S.Content>
           <S.Header>
             <S.Title>{data.guild.name}</S.Title>

@@ -31,3 +31,15 @@ export const Matches = styled.FlatList`
     margin-left: ${theme.spacings.small};
   `}
 `;
+
+export const BoxLoading = styled.View`
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+`;
+
+export const LoadingContent = styled.View`
+  width: 100%;
+  height: 200px;
+`;

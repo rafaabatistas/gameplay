@@ -52,3 +52,34 @@ export const ButtonBox = styled.View`
     margin-bottom: ${getBottomSpace()};
   `}
 `;
+
+export const BoxAnimation = styled.View`
+  ${({ theme }) => css`
+    flex: 1;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: ${theme.spacings.small};
+  `}
+`;
+
+export const Animation = styled.View`
+  width: 380px;
+  height: 120px;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Description = styled.Text`
+  ${({ theme }) => css`
+    font-family: ${theme.font.family.secundaryRegular};
+    font-weight: ${theme.font.regular};
+    font-size: ${theme.font.sizes.medium};
+    font-style: normal;
+    text-align: center;
+    color: ${theme.colors.gray};
+    margin-top: ${theme.spacings.xsmall};
+  `}
+`;

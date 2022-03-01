@@ -3,7 +3,7 @@ import { ButtonProps } from './Button';
 import { RectButton } from 'react-native-gesture-handler';
 import Icon from '../../../../../assets/svg/discord.svg';
 
-type WrapperProps = Pick<ButtonProps, 'size'>;
+type ButtonStylesProps = Pick<ButtonProps, 'size' | 'buttonStyle'>;
 
 const wrapperModifiers = {
   small: () => css`
@@ -24,9 +24,18 @@ const wrapperModifiers = {
   `
 };
 
-export const Button = styled(RectButton)<WrapperProps>`
-  ${({ theme, size, enabled }) => css`
-    background-color: ${theme.colors.primary};
+export const Wrapper = styled.View<{ border: boolean } & Pick<ButtonProps, 'size'>>`
+  ${({ theme, border, size }) => css`
+    border: ${border ? `1px solid ${theme.colors.secondary}` : 'none'};
+    border-radius: ${theme.border.radius};
+
+    ${!!size && wrapperModifiers[size]}
+  `}
+`;
+
+export const Button = styled(RectButton)<ButtonStylesProps>`
+  ${({ theme, size, enabled, buttonStyle }) => css`
+    background-color: ${buttonStyle === 'primary' ? theme.colors.primary : 'transparent'};
     border-radius: ${theme.border.radius};
     align-items: center;
     flex-direction: row;

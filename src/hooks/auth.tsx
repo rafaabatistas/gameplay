@@ -15,9 +15,9 @@ const { RESPONSE_TYPE } = process.env;
 
 export type AuthContextData = {
   user: User;
-  setUser: (user: User) => void;
   loading: boolean;
   signIn: () => Promise<void>;
+  signOut: () => Promise<void>;
 };
 
 export type AuthorizationResponse = AuthSession.AuthSessionResult & {
@@ -57,6 +57,11 @@ export const AuthProvider = (props: { children: JSX.Element }) => {
     }
   };
 
+  const signOut = async () => {
+    setUser({} as User);
+    await AsyncStorage.removeItem(COLLECTION_USERS);
+  };
+
   const loadUserStorageData = async () => {
     const storage = await AsyncStorage.getItem(COLLECTION_USERS);
 
@@ -72,7 +77,7 @@ export const AuthProvider = (props: { children: JSX.Element }) => {
     loadUserStorageData();
   }, []);
 
-  return <AuthContext.Provider value={{ user, signIn, loading, setUser }}>{props.children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ user, signIn, loading, signOut }}>{props.children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

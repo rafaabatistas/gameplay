@@ -46,6 +46,13 @@ export const validateMinute = (value: string): boolean => {
   return true;
 };
 
+export const validateWhichYearTheDateRefers = (month: string): number => {
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth();
+
+  return currentMonth > Number(month) - 1 ? currentYear + 1 : currentYear;
+};
+
 export const validateDescription = (value: string): boolean => {
   if (value.length > 100) return false;
   return true;

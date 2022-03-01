@@ -124,7 +124,7 @@ export const AppointmentDetails = () => {
         </>
       )}
       <S.ButtonBox>
-        <Button withIcon size="large" enabled={!!widget.instant_invite} handle={() => handleOpenGuild()}>
+        <Button withIcon size="overallWidth" enabled={!!widget.instant_invite} handle={() => handleOpenGuild()}>
           Entrar no servidor do Discord
         </Button>
       </S.ButtonBox>

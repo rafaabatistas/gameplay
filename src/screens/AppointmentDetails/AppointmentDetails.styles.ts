@@ -48,7 +48,7 @@ export const ButtonBox = styled.View`
     width: 100%;
     flex-direction: row;
     justify-content: center;
-    padding: ${theme.spacings.xsmall};
+    padding: ${theme.spacings.xsmall} ${theme.spacings.small};
     margin-bottom: ${getBottomSpace()};
   `}
 `;

@@ -1,6 +1,6 @@
 import * as S from './AppointmentCreate.styles';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { CommonActions, useNavigation } from '@react-navigation/native';
@@ -29,6 +29,7 @@ import {
   validateHours,
   validateMinute,
   validateDescription,
+  validateDayOfTheWeek,
   validateDayAndMonth
 } from '../../utils/validate';
 
@@ -42,14 +43,6 @@ type FormInputsProps = {
   hour: string;
   minute: string;
   description: string;
-};
-
-type ArrayUpdateStateProps = {
-  day: (value: string, name: InputNameProps) => void;
-  month: (value: string, name: InputNameProps) => void;
-  hour: (value: string, name: InputNameProps) => void;
-  minute: (value: string, name: InputNameProps) => void;
-  description: (value: string, name: InputNameProps) => void;
 };
 
 type ArrayValidateProps = {
@@ -95,32 +88,9 @@ export const AppointmentCreate = () => {
   };
 
   const handleFormInputs = (value: string, name: InputNameProps) => {
-    const valuesInput = { ...formInputs, [name]: value };
+    setFormInputs({ ...formInputs, [name]: value });
 
-    setFormInputs(valuesInput);
-
-    const unfilledInputs = checkFilledInputs(valuesInput);
-    const checkingFillingDayAndMonth = checkFilledInputs({ day: valuesInput.day, month: valuesInput.month });
-
-    const arrayUpdateState: ArrayUpdateStateProps = {
-      day: validateFields,
-      month: validateFields,
-      hour: validateFields,
-      minute: validateFields,
-      description: validateFields
-    };
-
-    if (arrayUpdateState[name]) {
-      arrayUpdateState[name](value, name);
-    }
-
-    if (checkingFillingDayAndMonth.length === 0) {
-      checkingDayAndMonth(valuesInput.day, valuesInput.month);
-    }
-
-    if (unfilledInputs.length === 0) {
-      validationOfRequiredFields();
-    }
+    validateFields(value, name);
   };
 
   const validateFields = (value: string, name: InputNameProps) => {
@@ -132,15 +102,10 @@ export const AppointmentCreate = () => {
       description: validateDescription
     };
 
-    const validateValue = arrayValidate[name];
+    if (arrayValidate[name]) {
+      const isValid = arrayValidate[name](value);
 
-    if (validateValue) {
-      const isValid = validateValue(value);
-
-      setValidate({
-        ...validate,
-        [`${name}IsValid`]: !isValid
-      });
+      setValidate({ ...validate, [`${name}IsValid`]: !isValid });
     }
   };
 
@@ -150,30 +115,41 @@ export const AppointmentCreate = () => {
   };
 
   const checkingDayAndMonth = (day: string, month: string) => {
-    const isValid = validateDayAndMonth(day, month);
+    if (Number(day) !== 0 && Number(month) !== 0) {
+      const isValid = validateDayAndMonth(day, month);
 
-    setValidate({
-      ...validate,
-      dayIsValid: !isValid
-    });
+      setValidate({
+        ...validate,
+        dayIsValid: !isValid
+      });
+    }
   };
 
   const validationOfRequiredFields = () => {
+    const arrayValidate: any = validate;
     const validationOfRequiredFields = checkFilledInputs({ ...formInputs, ...guild, category: category });
+    const checkingFieldsForErrors = Object.keys(arrayValidate).filter((k) => arrayValidate[k] === true);
 
-    if (validationOfRequiredFields.length === 0) {
+    if (validationOfRequiredFields.length === 0 && checkingFieldsForErrors.length === 0) {
       setButtonEnabled(true);
+      return;
     }
+
+    setButtonEnabled(false);
   };
 
   const handleSubmit = async () => {
     try {
       const { day, month, hour, minute, description } = formInputs;
+      const dayOfTheWeek = validateDayOfTheWeek(day, month);
+      const dayAndMonth = `${day.padStart(2, '0')}/${month.padStart(2, '0')}`;
+      const hourAndMinute = `${hour.padStart(2, '0')}:${minute.padStart(2, '0')}h`;
+
       const newAppointment = {
         id: uuid.v4(),
         guild,
         category,
-        date: `${day}/${month} às ${hour}:${minute}`,
+        date: `${dayOfTheWeek} ${dayAndMonth} às ${hourAndMinute}`,
         description
       };
 
@@ -188,6 +164,17 @@ export const AppointmentCreate = () => {
       throw new Error('Erro ao agendar uma nova jogatina');
     }
   };
+
+  useEffect(() => {
+    const { day, month } = formInputs;
+    const { dayIsValid, monthIsValid } = validate;
+
+    if (day !== '' && month !== '' && !dayIsValid && !monthIsValid) {
+      checkingDayAndMonth(day, month);
+    }
+
+    validationOfRequiredFields();
+  }, [formInputs, guild, category]);
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }}>
@@ -208,7 +195,7 @@ export const AppointmentCreate = () => {
                     <GuildIcon
                       withBorder={false}
                       marginRight={false}
-                      uri={`${CDN_IMAGE}/icons/${guild.id}/${guild.icon}.png`}
+                      uri={guild.icon ? `${CDN_IMAGE}/icons/${guild.id}/${guild.icon}.png` : null}
                     />
                   )}
                   <S.SelectBody>
@@ -275,7 +262,7 @@ export const AppointmentCreate = () => {
                 onChangeText={(value: string) => handleFormInputs(value, 'description')}
               />
               <S.ButtonBox>
-                <Button enabled={buttonEnabled} size="large" handle={() => handleSubmit()}>
+                <Button enabled={buttonEnabled} size="overallWidth" handle={() => handleSubmit()}>
                   Agendar
                 </Button>
               </S.ButtonBox>

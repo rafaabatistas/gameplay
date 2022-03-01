@@ -8,15 +8,15 @@ export const validateDays = (value: string): boolean => {
 };
 
 export const validateMonth = (value: string): boolean => {
-  const Month = Number(value);
-  if (isNaN(Month)) return false;
+  const month = Number(value);
+  if (isNaN(month)) return false;
 
-  if (Month > 12 || Month < 1) return false;
+  if (month > 12 || month < 1) return false;
 
   return true;
 };
 
-export const validateDayAndMonth = (days: string, months: string) => {
+export const validateDayAndMonth = (days: string, months: string): boolean => {
   const day = Number(days);
   const month = Number(months);
   if (isNaN(day) || isNaN(month)) return false;

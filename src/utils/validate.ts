@@ -53,6 +53,15 @@ export const validateWhichYearTheDateRefers = (month: string): number => {
   return currentMonth > Number(month) - 1 ? currentYear + 1 : currentYear;
 };
 
+export const validateDayOfTheWeek = (day: string, month: string): string => {
+  const year = validateWhichYearTheDateRefers(month);
+  const date = new Date(+year, +month - 1, +day);
+  const dayOfTheWeek = date.getDay();
+  const week = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab'];
+
+  return week[dayOfTheWeek];
+};
+
 export const validateDescription = (value: string): boolean => {
   if (value.length > 100) return false;
   return true;

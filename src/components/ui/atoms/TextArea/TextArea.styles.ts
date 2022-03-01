@@ -7,7 +7,7 @@ export const BackgroundInput = styled(LinearGradient).attrs({
   end: { x: 0, y: 0.5 }
 })`
   ${({ theme }) => css`
-    width: 327px;
+    width: 100%;
     height: 95px;
     align-items: center;
     justify-content: center;
@@ -22,7 +22,7 @@ export const ContentInput = styled(LinearGradient).attrs({
   end: { x: 0, y: 0.5 }
 })`
   ${({ theme }) => css`
-    width: 324px;
+    width: 99%;
     height: 92px;
     align-items: center;
     justify-content: center;

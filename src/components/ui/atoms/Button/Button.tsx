@@ -4,7 +4,7 @@ import React from 'react';
 
 export type ButtonProps = {
   children: React.ReactNode;
-  size?: 'small' | 'medium' | 'large';
+  size?: 'small' | 'medium' | 'large' | 'overallWidth';
   withIcon?: boolean;
   enabled?: boolean;
   handle?: () => void;

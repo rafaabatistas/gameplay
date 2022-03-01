@@ -17,6 +17,10 @@ const wrapperModifiers = {
   large: () => css`
     width: 327px;
     height: 56px;
+  `,
+  overallWidth: () => css`
+    width: 100%;
+    height: 56px;
   `
 };
 

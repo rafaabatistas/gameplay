@@ -32,7 +32,7 @@ export const Matches = styled.FlatList`
   `}
 `;
 
-export const BoxLoading = styled.View`
+export const BoxContent = styled.View`
   width: 100%;
   height: 100%;
   align-items: center;
@@ -42,4 +42,32 @@ export const BoxLoading = styled.View`
 export const LoadingContent = styled.View`
   width: 100%;
   height: 200px;
+`;
+
+export const BoxAnimation = styled.View`
+  flex: 1;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: column;
+`;
+
+export const Description = styled.Text`
+  ${({ theme }) => css`
+    font-family: ${theme.font.family.secundaryRegular};
+    font-weight: ${theme.font.regular};
+    font-size: ${theme.font.sizes.medium};
+    font-style: normal;
+    text-align: center;
+    padding: 0 ${theme.spacings.xsmall};
+    color: ${theme.colors.gray};
+    margin-top: ${theme.spacings.xsmall};
+  `}
+`;
+
+export const AnimationContent = styled.View`
+  width: 100%;
+  height: 210px;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
 `;

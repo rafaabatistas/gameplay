@@ -3,17 +3,20 @@ import * as S from './Home.styles';
 import React, { useState, useCallback } from 'react';
 import { FlatListProps } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import LottieView from 'lottie-react-native';
 import { CommonActions, useNavigation, useFocusEffect } from '@react-navigation/native';
 
 import { Profile } from '../../components/ui/molecules/Profile/Profile';
 import { ButtonAdd } from '../../components/ui/atoms/ButtonAdd/ButtonAdd';
-import { CategorySelect } from '../../components/ui/molecules/CategorySelect/CategorySelect';
-import { ListHeader } from '../../components/ui/molecules/ListHeader/ListHeader';
-import { Appointment, AppointmentData } from '../../components/ui/molecules/Appointment/Appointment';
 import { ListDivider } from '../../components/ui/atoms/ListDivider/ListDivider';
+import { ListHeader } from '../../components/ui/molecules/ListHeader/ListHeader';
+import { LoadingSpinner } from '../../components/ui/atoms/LoadingSpinner/LoadingSpinner';
+import { CategorySelect } from '../../components/ui/molecules/CategorySelect/CategorySelect';
+import { Appointment, AppointmentData } from '../../components/ui/molecules/Appointment/Appointment';
 
 import { COLLECTION_APPOINTMENTS } from '../../configs/database';
-import { LoadingSpinner } from '../../components/ui/atoms/LoadingSpinner/LoadingSpinner';
+
+import Animation from '../../../assets/json/rocket.json';
 
 export const Home = () => {
   const [category, setCategory] = useState('');
@@ -65,12 +68,12 @@ export const Home = () => {
       </S.Header>
       <CategorySelect categorySelected={category} setCategory={handleCategorySelected} />
       {loading ? (
-        <S.BoxLoading>
+        <S.BoxContent>
           <S.LoadingContent>
             <LoadingSpinner />
           </S.LoadingContent>
-        </S.BoxLoading>
-      ) : (
+        </S.BoxContent>
+      ) : appointments.length > 0 ? (
         <>
           <ListHeader title="Partidas agendadas " totalNumberOfItems={appointments.length} />
           <S.Matches<React.ElementType<FlatListProps<any>>>
@@ -83,6 +86,13 @@ export const Home = () => {
             ItemSeparatorComponent={() => <ListDivider />}
           />
         </>
+      ) : (
+        <S.BoxContent>
+          <S.AnimationContent>
+            <LottieView source={Animation} style={{ height: 260 }} autoPlay resizeMode="contain" loop />
+          </S.AnimationContent>
+          <S.Description>Agende uma partida agora e dê um ganho no seu estresse.</S.Description>
+        </S.BoxContent>
       )}
     </S.Wrapper>
   );

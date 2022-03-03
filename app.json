@@ -7,10 +7,12 @@
     "icon": "./assets/icon.png",
     "scheme": "gameplay",
     "platforms": ["ios", "android"],
+    "description": "Aplicativo onde você pode criar grupos com seus amigos e agendar jogatinas dos seus games favoritos.",
+    "primaryColor": "#0A1033",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#03133E"
+      "backgroundColor": "#0A1033"
     },
     "updates": {
       "fallbackToCacheTimeout": 0

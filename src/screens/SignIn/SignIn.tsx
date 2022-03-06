@@ -2,6 +2,7 @@ import * as S from './SignIn.styles';
 
 import React from 'react';
 import { ActivityIndicator } from 'react-native';
+import * as Analytics from 'expo-firebase-analytics';
 
 import { useAuth } from '../../hooks/auth';
 
@@ -14,6 +15,14 @@ import Illustration from '../../../assets/img/illustration.png';
 
 export const SignIn = () => {
   const { loading, signIn } = useAuth();
+
+  const onPressSignInButton = () => {
+    Analytics.logEvent('SignIn', {
+      sender: 'button',
+      screen: 'SignIn',
+      purpose: 'O usuário está se autenticando com o Discord'
+    });
+  };
 
   const handleSignIn = async () => {
     try {
@@ -35,7 +44,14 @@ export const SignIn = () => {
           {loading ? (
             <ActivityIndicator color={theme.colors.primary} size={36} />
           ) : (
-            <Button withIcon size="medium" handle={() => handleSignIn()}>
+            <Button
+              withIcon
+              size="medium"
+              handle={() => {
+                handleSignIn();
+                onPressSignInButton();
+              }}
+            >
               Entrar com Discord
             </Button>
           )}

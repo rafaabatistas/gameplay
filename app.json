@@ -25,14 +25,21 @@
       "bundleIdentifier": "com.rafaabatistas.gameplay"
     },
     "android": {
+      "googleServicesFile": "./google-services.json",
+      "package": "com.rafaabatistas.gameplay",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      },
-      "package": "com.rafaabatistas.gameplay"
+        "backgroundColor": "#0A1033"
+      }
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/icon.png",
+          "color": "#0A1033"
+        }
+      ]
+    ]
   }
 }

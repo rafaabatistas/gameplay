@@ -21,7 +21,7 @@ export const Routes = () => {
       onStateChange={async () => {
         const previousRouteName = routeNameRef.current;
         const currentRouteName = navigationRef.current?.getCurrentRoute()?.name;
-        console.log(previousRouteName, currentRouteName, 'bla');
+
         if (previousRouteName !== currentRouteName) {
           await Analytics.logEvent(`${currentRouteName}`, {
             screen: `${currentRouteName}`,

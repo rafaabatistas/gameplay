@@ -1,5 +1,8 @@
-import type User from '../@types/user';
+import * as Notifications from 'expo-notifications';
+
 const { CDN_IMAGE } = process.env;
+
+import type User from '../@types/user';
 
 export type UserInfoResponse = {
   data: {
@@ -25,4 +28,15 @@ export const userInfoFormatting = (userInfo: UserInfoResponse): User => {
   const { id, username, email } = userInfo.data;
 
   return { id, username, avatar, email, firstName };
+};
+
+export const schedulePushNotification = async (title: string, body: string, data: any, date: any) => {
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title: title,
+      body: body,
+      data: data
+    },
+    trigger: date
+  });
 };

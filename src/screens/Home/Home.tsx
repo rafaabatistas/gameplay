@@ -1,7 +1,8 @@
 import * as S from './Home.styles';
 
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { FlatListProps } from 'react-native';
+import * as Notifications from 'expo-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LottieView from 'lottie-react-native';
 import { CommonActions, useNavigation, useFocusEffect } from '@react-navigation/native';
@@ -17,18 +18,22 @@ import { Appointment, AppointmentData } from '../../components/ui/molecules/Appo
 import { COLLECTION_APPOINTMENTS } from '../../configs/database';
 
 import Animation from '../../../assets/json/rocket.json';
+import { registerForPushNotificationsAsync } from '../../utils/functions';
 
 export const Home = () => {
   const [category, setCategory] = useState('');
   const [appointments, setAppointments] = useState<AppointmentData[]>([] as AppointmentData[]);
   const [loading, setLoading] = useState(true);
+  const notificationListener = useRef<any>();
+  const responseListener = useRef<any>();
   const navigation = useNavigation();
 
   const handleCategorySelected = (id: string) => {
     id === category ? setCategory('') : setCategory(id);
   };
 
-  const handleAppointmentDetails = (guildSelected: AppointmentData) => {
+  const handleAppointmentDetails = (guildSelected: AppointmentData | any) => {
+    console.log(guildSelected);
     navigation.dispatch(CommonActions.navigate({ name: 'AppointmentDetails', params: { guildSelected } }));
   };
 
@@ -59,6 +64,24 @@ export const Home = () => {
       loadingAppointments();
     }, [category])
   );
+
+  useEffect(() => {
+    registerForPushNotificationsAsync().then((token) => console.log('token', token));
+
+    notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
+      console.log(notification);
+      navigation.dispatch(CommonActions.navigate({ name: 'Home' }));
+    });
+
+    responseListener.current = Notifications.addNotificationResponseReceivedListener((res) => {
+      handleAppointmentDetails(res.notification.request.content.data);
+    });
+
+    return () => {
+      Notifications.removeNotificationSubscription(notificationListener.current);
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, []);
 
   return (
     <S.Wrapper>

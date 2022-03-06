@@ -35,6 +35,7 @@
     "expo": "~42.0.1",
     "expo-app-loading": "1.1.2",
     "expo-auth-session": "~3.3.1",
+    "expo-firebase-analytics": "~4.1.0",
     "expo-font": "~9.2.1",
     "expo-linear-gradient": "^9.2.0",
     "expo-notifications": "~0.12.3",

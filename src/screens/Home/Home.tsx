@@ -2,6 +2,7 @@ import * as S from './Home.styles';
 
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { FlatListProps } from 'react-native';
+import * as Analytics from 'expo-firebase-analytics';
 import * as Notifications from 'expo-notifications';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LottieView from 'lottie-react-native';
@@ -19,6 +20,7 @@ import { COLLECTION_APPOINTMENTS } from '../../configs/database';
 
 import Animation from '../../../assets/json/rocket.json';
 import { registerForPushNotificationsAsync } from '../../utils/functions';
+import { useAuth } from '../../hooks/auth';
 
 export const Home = () => {
   const [category, setCategory] = useState('');
@@ -27,18 +29,27 @@ export const Home = () => {
   const notificationListener = useRef<any>();
   const responseListener = useRef<any>();
   const navigation = useNavigation();
+  const { user } = useAuth();
 
   const handleCategorySelected = (id: string) => {
     id === category ? setCategory('') : setCategory(id);
   };
 
   const handleAppointmentDetails = (guildSelected: AppointmentData | any) => {
-    console.log(guildSelected);
     navigation.dispatch(CommonActions.navigate({ name: 'AppointmentDetails', params: { guildSelected } }));
   };
 
   const handleAppointmentCreate = () => {
     navigation.dispatch(CommonActions.navigate({ name: 'AppointmentCreate' }));
+  };
+
+  const onPressAppointmentCreateButton = () => {
+    Analytics.logEvent('AppointmentCreate', {
+      sender: 'button',
+      user: user.id,
+      screen: 'AppointmentCreate',
+      purpose: 'O usuário está agendando uma nova partida'
+    });
   };
 
   const loadingAppointments = async () => {
@@ -87,7 +98,12 @@ export const Home = () => {
     <S.Wrapper>
       <S.Header>
         <Profile />
-        <ButtonAdd handlePress={handleAppointmentCreate} />
+        <ButtonAdd
+          handlePress={() => {
+            handleAppointmentCreate();
+            onPressAppointmentCreateButton();
+          }}
+        />
       </S.Header>
       <CategorySelect categorySelected={category} setCategory={handleCategorySelected} />
       {loading ? (

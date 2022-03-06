@@ -21,6 +21,9 @@ import { CategorySelect } from '../../components/ui/molecules/CategorySelect/Cat
 
 import theme from '../../styles/theme';
 
+import { schedulePushNotification } from '../../utils/functions';
+import { validateWhichYearTheDateRefers } from '../../utils/validate';
+
 import { COLLECTION_APPOINTMENTS } from '../../configs/database';
 
 import {
@@ -141,6 +144,8 @@ export const AppointmentCreate = () => {
   const handleSubmit = async () => {
     try {
       const { day, month, hour, minute, description } = formInputs;
+      const year = validateWhichYearTheDateRefers(month);
+
       const dayOfTheWeek = validateDayOfTheWeek(day, month);
       const dayAndMonth = `${day.padStart(2, '0')}/${month.padStart(2, '0')}`;
       const hourAndMinute = `${hour.padStart(2, '0')}:${minute.padStart(2, '0')}h`;
@@ -157,6 +162,12 @@ export const AppointmentCreate = () => {
       const appointments = storage ? JSON.parse(storage) : [];
 
       await AsyncStorage.setItem(COLLECTION_APPOINTMENTS, JSON.stringify([...appointments, newAppointment]));
+      schedulePushNotification(
+        'O tão aguardado momento chegou!!! 🎮',
+        `Nós estamos te aguardando, entre no servidor do ${guild.name}`,
+        newAppointment,
+        new Date(year, +month - 1, +day, +hour, +minute)
+      );
 
       navigation.dispatch(CommonActions.navigate({ name: 'Home' }));
     } catch (err) {

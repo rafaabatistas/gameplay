@@ -4,6 +4,7 @@
     "slug": "Gameplay",
     "version": "1.0.0",
     "orientation": "portrait",
+    "githubUrl": "https://github.com/rafaabatistas/gameplay",
     "icon": "./assets/icon.png",
     "scheme": "gameplay",
     "platforms": ["ios", "android"],
@@ -36,7 +37,7 @@
       [
         "expo-notifications",
         {
-          "icon": "./assets/icon.png",
+          "icon": "./assets/icon-notification.png",
           "color": "#0A1033"
         }
       ]

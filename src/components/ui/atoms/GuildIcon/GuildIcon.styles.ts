@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components/native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { MotiView } from 'moti';
+
 import { GuildIconProps } from './GuildIcon';
 
 type WrapperProps = Pick<GuildIconProps, 'marginRight'>;
@@ -17,6 +19,7 @@ export const Wrapper = styled(LinearGradient).attrs({
     justify-content: center;
     border-radius: ${theme.border.radius};
     margin-right: ${marginRight ? theme.spacings.small : 0};
+    position: relative;
   `}
 `;
 
@@ -36,5 +39,19 @@ export const BackgroundDiscord = styled.View`
     justify-content: center;
     border-radius: ${theme.border.radius};
     background-color: ${theme.colors.discord};
+  `}
+`;
+
+export const IconSelected = styled(MotiView)`
+  ${({ theme }) => css`
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    bottom: -3px;
+    right: -3px;
+    align-items: center;
+    justify-content: center;
+    border-radius: 22px;
+    background-color: ${theme.colors.gradientBg2};
   `}
 `;

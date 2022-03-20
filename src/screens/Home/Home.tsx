@@ -12,6 +12,7 @@ import { Profile } from '../../components/ui/molecules/Profile/Profile';
 import { ButtonAdd } from '../../components/ui/atoms/ButtonAdd/ButtonAdd';
 import { ListDivider } from '../../components/ui/atoms/ListDivider/ListDivider';
 import { ListHeader } from '../../components/ui/molecules/ListHeader/ListHeader';
+import { EditPanelAppointment } from '../../components/ui/molecules/EditPanelAppointment/EditPanelAppointment';
 import { LoadingSpinner } from '../../components/ui/atoms/LoadingSpinner/LoadingSpinner';
 import { CategorySelect } from '../../components/ui/molecules/CategorySelect/CategorySelect';
 import { Appointment, AppointmentData } from '../../components/ui/molecules/Appointment/Appointment';
@@ -25,6 +26,8 @@ import { useAuth } from '../../hooks/auth';
 export const Home = () => {
   const [category, setCategory] = useState('');
   const [appointments, setAppointments] = useState<AppointmentData[]>([] as AppointmentData[]);
+  const [editAppointment, setEditAppointment] = useState<string[]>([]);
+  const [editMode, setEditMode] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
   const notificationListener = useRef<any>();
   const responseListener = useRef<any>();
@@ -41,6 +44,23 @@ export const Home = () => {
 
   const handleAppointmentCreate = () => {
     navigation.dispatch(CommonActions.navigate({ name: 'AppointmentCreate' }));
+  };
+
+  const enableEditModeAppointment = (id: string) => {
+    if (editAppointment.find((i) => i === id) === undefined) {
+      !editMode && setEditMode(true);
+      setEditAppointment([...editAppointment, id]);
+      return;
+    }
+
+    const removeItemListSchedule = editAppointment.filter((i) => i !== id);
+    setEditAppointment(removeItemListSchedule);
+    removeItemListSchedule.length === 0 && setEditMode(false);
+  };
+
+  const disableEditModeAppointment = () => {
+    setEditMode(false);
+    setEditAppointment([]);
   };
 
   const onPressAppointmentCreateButton = () => {
@@ -96,15 +116,26 @@ export const Home = () => {
 
   return (
     <S.Wrapper>
-      <S.Header>
-        <Profile />
-        <ButtonAdd
-          handlePress={() => {
-            handleAppointmentCreate();
-            onPressAppointmentCreateButton();
-          }}
-        />
-      </S.Header>
+      <S.BoxHeader editMode={editMode}>
+        <S.Header>
+          {editMode ? (
+            <EditPanelAppointment
+              exitEditMode={() => disableEditModeAppointment()}
+              numberAppointmentsSelected={editAppointment.length}
+            />
+          ) : (
+            <>
+              <Profile />
+              <ButtonAdd
+                handlePress={() => {
+                  handleAppointmentCreate();
+                  onPressAppointmentCreateButton();
+                }}
+              />
+            </>
+          )}
+        </S.Header>
+      </S.BoxHeader>
       <CategorySelect categorySelected={category} setCategory={handleCategorySelected} />
       {loading ? (
         <S.BoxContent>
@@ -119,7 +150,13 @@ export const Home = () => {
             data={appointments}
             keyExtractor={(item: AppointmentData) => item.id}
             renderItem={({ item }: { item: AppointmentData }) => (
-              <Appointment data={item} onPress={() => handleAppointmentDetails(item)} />
+              <Appointment
+                data={item}
+                editMode={editMode}
+                isSelected={!!editAppointment.find((i) => i === item.id)}
+                onLongPress={() => enableEditModeAppointment(item.id)}
+                onPress={() => (editMode ? enableEditModeAppointment(item.id) : handleAppointmentDetails(item))}
+              />
             )}
             showsVerticalScrollIndicator={false}
             ItemSeparatorComponent={() => <ListDivider />}

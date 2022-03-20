@@ -10,13 +10,21 @@ export const Wrapper = styled(Container)`
 export const Header = styled.View`
   ${({ theme }) => css`
     width: 100%;
+    max-width: 100%;
     height: 50px;
-    padding: ${`0 ${theme.spacings.small}`};
+    padding: 0 ${theme.spacings.small};
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     margin-top: ${`${Platform.OS === 'ios' ? getStatusBarHeight() + 36 : 56}px`};
-    margin-bottom: ${theme.spacings.large};
+    margin-bottom: 20px;
+  `}
+`;
+
+export const BoxHeader = styled.View<{ editMode: boolean }>`
+  ${({ theme, editMode }) => css`
+    background-color: ${editMode ? theme.colors.gradientBg2 : 'transparent'};
+    margin-bottom: 20px;
   `}
 `;
 

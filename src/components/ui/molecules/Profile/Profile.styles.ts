@@ -3,6 +3,8 @@ import styled, { css } from 'styled-components/native';
 export const Container = styled.View`
   flex-direction: row;
   align-items: center;
+  max-width: 85%;
+  overflow: hidden;
 `;
 
 export const Box = styled.View`

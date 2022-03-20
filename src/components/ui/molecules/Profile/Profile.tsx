@@ -27,7 +27,9 @@ export const Profile = () => {
       <S.Box>
         <S.User>
           <S.Greeting>Olá, </S.Greeting>
-          <S.UserName>{user.firstName}</S.UserName>
+          <S.UserName ellipsizeMode="tail" numberOfLines={1}>
+            {user.firstName}
+          </S.UserName>
         </S.User>
         <S.Message>Hoje é dia de vitória</S.Message>
       </S.Box>

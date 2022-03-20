@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components/native';
+import { MotiView } from 'moti';
 
-export const Wrapper = styled.View`
+export const Wrapper = styled(MotiView)`
   width: 100%;
   flex-direction: row;
   align-items: center;

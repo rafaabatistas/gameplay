@@ -4,15 +4,15 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import { CategoryProps } from './Category';
 
-type ContentProps = Pick<CategoryProps, 'checked'>;
+type ContentProps = Pick<CategoryProps, 'checked' | 'opacity'>;
 
 export const Wrapper = styled(RectButton)<ContentProps>`
-  ${({ theme, checked }) => css`
+  ${({ theme, opacity }) => css`
     width: 104px;
     height: 120px;
     align-items: center;
     justify-content: center;
-    opacity: ${checked ? 1 : 0.4};
+    opacity: ${opacity ? 1 : 0.4};
     border-radius: ${theme.border.radius};
     margin-right: ${theme.spacings.xxsmall};
   `}

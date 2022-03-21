@@ -7,12 +7,20 @@ export type CategoryProps = {
   title: string;
   icon: React.FC<SvgProps>;
   checked?: boolean;
+  opacity?: boolean;
   hasCheckBox?: boolean;
   onPress?: () => void;
 };
 
-export const Category = ({ title, icon: Icon, checked = false, hasCheckBox = false, onPress }: CategoryProps) => (
-  <S.Wrapper onPress={onPress} checked={checked}>
+export const Category = ({
+  title,
+  icon: Icon,
+  checked = false,
+  opacity = false,
+  hasCheckBox = false,
+  onPress
+}: CategoryProps) => (
+  <S.Wrapper onPress={onPress} checked={checked} opacity={opacity}>
     <S.Background>
       <S.Content>
         {hasCheckBox && (

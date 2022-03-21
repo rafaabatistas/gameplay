@@ -45,7 +45,9 @@ export const Appointment = ({ data, editMode = false, isSelected = false, ...res
         <GuildIcon uri={uri} isSelected={isSelected} />
         <S.Content>
           <S.Header>
-            <S.Title>{data.guild.name}</S.Title>
+            <S.Title numberOfLines={1} ellipsizeMode="tail">
+              {data.guild.name}
+            </S.Title>
             <S.Category>{category?.title}</S.Category>
           </S.Header>
           <S.Footer>

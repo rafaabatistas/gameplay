@@ -15,6 +15,7 @@ export const Content = styled.View`
 export const Header = styled.View`
   width: 100%;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
   margin-bottom: 12px;
 `;
@@ -22,6 +23,7 @@ export const Header = styled.View`
 export const Footer = styled.View`
   width: 100%;
   flex-direction: row;
+  align-items: center;
   justify-content: space-between;
 `;
 
@@ -41,8 +43,11 @@ export const Date = styled.Text`
 
 export const Title = styled.Text`
   ${({ theme }) => css`
+    width: 60%;
     font-family: ${theme.font.family.primaryBold};
     font-size: ${theme.font.sizes.xmedium};
+    font-weight: ${theme.font.bold};
+    font-style: normal;
     color: ${theme.colors.white};
   `}
 `;

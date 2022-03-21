@@ -19,9 +19,10 @@ import { Appointment, AppointmentData } from '../../components/ui/molecules/Appo
 
 import { COLLECTION_APPOINTMENTS } from '../../configs/database';
 
-import Animation from '../../../assets/json/rocket.json';
-import { registerForPushNotificationsAsync } from '../../utils/functions';
+import { registerForPushNotificationsAsync, getCollectionAppointments } from '../../utils/functions';
 import { useAuth } from '../../hooks/auth';
+
+import Animation from '../../../assets/json/rocket.json';
 
 export const Home = () => {
   const [category, setCategory] = useState('');
@@ -63,6 +64,21 @@ export const Home = () => {
     setEditAppointment([]);
   };
 
+  const deleteAppointment = async () => {
+    try {
+      const appointments: AppointmentData[] = await getCollectionAppointments();
+      const currentAppointments: AppointmentData[] = appointments.filter((item) => !editAppointment.includes(item.id));
+      editAppointment.forEach(async (id) => await Notifications.cancelScheduledNotificationAsync(id));
+      await AsyncStorage.setItem(COLLECTION_APPOINTMENTS, JSON.stringify(currentAppointments));
+      setAppointments(currentAppointments);
+      disableEditModeAppointment();
+    } catch (error) {
+      console.log(error);
+      alert('Erro ao excluir o agendamento');
+      throw new Error('Erro ao excluir o agendamento');
+    }
+  };
+
   const onPressAppointmentCreateButton = () => {
     Analytics.logEvent('AppointmentCreate', {
       sender: 'button',
@@ -74,8 +90,7 @@ export const Home = () => {
 
   const loadingAppointments = async () => {
     try {
-      const res = await AsyncStorage.getItem(COLLECTION_APPOINTMENTS);
-      const storage: AppointmentData[] = res ? JSON.parse(res) : [];
+      const storage: AppointmentData[] = await getCollectionAppointments();
 
       if (category) {
         setAppointments(storage.filter((item) => item.category === category));
@@ -101,7 +116,6 @@ export const Home = () => {
 
     notificationListener.current = Notifications.addNotificationReceivedListener((notification) => {
       console.log(notification);
-      navigation.dispatch(CommonActions.navigate({ name: 'Home' }));
     });
 
     responseListener.current = Notifications.addNotificationResponseReceivedListener((res) => {
@@ -120,6 +134,7 @@ export const Home = () => {
         <S.Header>
           {editMode ? (
             <EditPanelAppointment
+              deleteAppointment={() => deleteAppointment()}
               exitEditMode={() => disableEditModeAppointment()}
               numberAppointmentsSelected={editAppointment.length}
             />

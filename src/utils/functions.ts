@@ -1,8 +1,10 @@
 import { Platform } from 'react-native';
 import Constants from 'expo-constants';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Notifications from 'expo-notifications';
 
 const { CDN_IMAGE } = process.env;
+import { COLLECTION_APPOINTMENTS } from '../configs/database';
 
 import type User from '../@types/user';
 
@@ -73,4 +75,14 @@ export const registerForPushNotificationsAsync = async () => {
   }
 
   return token;
+};
+
+export const getCollectionAppointments = async () => {
+  try {
+    const response = await AsyncStorage.getItem(COLLECTION_APPOINTMENTS);
+    return response ? JSON.parse(response) : [];
+  } catch (error) {
+    console.log(error);
+    throw new Error('Erro ao carregar os agendamentos');
+  }
 };

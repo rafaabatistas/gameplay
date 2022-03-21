@@ -32,8 +32,8 @@ export const userInfoFormatting = (userInfo: UserInfoResponse): User => {
   return { id, username, avatar, email, firstName };
 };
 
-export const schedulePushNotification = async (title: string, body: string, data: any, date: any) => {
-  await Notifications.scheduleNotificationAsync({
+export const schedulePushNotification = async (title: string, body: string, data: any, date: Date) => {
+  return await Notifications.scheduleNotificationAsync({
     content: {
       title: title,
       body: body,

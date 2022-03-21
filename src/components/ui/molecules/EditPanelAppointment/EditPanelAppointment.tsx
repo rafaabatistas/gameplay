@@ -1,6 +1,7 @@
 import * as S from './EditPanelAppointment.styles';
 
 import React from 'react';
+import { View } from 'react-native';
 import { Feather, FontAwesome, Ionicons } from '@expo/vector-icons';
 import { BorderlessButton } from 'react-native-gesture-handler';
 
@@ -8,10 +9,15 @@ import theme from '../../../../styles/theme';
 
 export type EditPanelScheduleProps = {
   numberAppointmentsSelected: number;
-  exitEditMode: () => void;
+  exitEditMode?: () => void;
+  deleteAppointment?: () => void;
 };
 
-export const EditPanelAppointment = ({ exitEditMode, numberAppointmentsSelected }: EditPanelScheduleProps) => (
+export const EditPanelAppointment = ({
+  exitEditMode,
+  numberAppointmentsSelected,
+  deleteAppointment
+}: EditPanelScheduleProps) => (
   <S.Wrapper
     from={{ opacity: 0 }}
     animate={{ opacity: 1 }}
@@ -25,10 +31,14 @@ export const EditPanelAppointment = ({ exitEditMode, numberAppointmentsSelected 
       <S.NumberAppointmentsSelected>{numberAppointmentsSelected}</S.NumberAppointmentsSelected>
     </S.BoxButtons>
     <S.BoxButtons>
-      <BorderlessButton>
-        {numberAppointmentsSelected === 1 && <FontAwesome name="pencil" size={24} color={theme.colors.lightGray} />}
-      </BorderlessButton>
-      <BorderlessButton>
+      {numberAppointmentsSelected === 1 ? (
+        <BorderlessButton>
+          <FontAwesome name="pencil" size={24} color={theme.colors.lightGray} />
+        </BorderlessButton>
+      ) : (
+        <View />
+      )}
+      <BorderlessButton onPress={deleteAppointment}>
         <Ionicons name="trash" size={24} color={theme.colors.lightGray} />
       </BorderlessButton>
     </S.BoxButtons>

@@ -41,6 +41,7 @@
     "expo-notifications": "~0.12.3",
     "expo-random": "~11.2.0",
     "expo-status-bar": "~1.0.4",
+    "expo-updates": "~0.8.2",
     "lottie-react-native": "4.0.2",
     "moti": "^0.17.1",
     "react": "16.13.1",

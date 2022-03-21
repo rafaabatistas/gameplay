@@ -5,7 +5,6 @@ import { View, ScrollView, KeyboardAvoidingView, Platform } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import uuid from 'react-native-uuid';
 
 import { ListGuilds } from '../ListGuilds/ListGuilds';
 import { RectButton } from 'react-native-gesture-handler';
@@ -149,24 +148,31 @@ export const AppointmentCreate = () => {
       const dayOfTheWeek = validateDayOfTheWeek(day, month);
       const dayAndMonth = `${day.padStart(2, '0')}/${month.padStart(2, '0')}`;
       const hourAndMinute = `${hour.padStart(2, '0')}:${minute.padStart(2, '0')}h`;
+      const date_format = new Date(year, +month - 1, +day, +hour, +minute);
 
       const newAppointment = {
-        id: uuid.v4(),
         guild,
         category,
         date: `${dayOfTheWeek} ${dayAndMonth} às ${hourAndMinute}`,
+        date_create: new Date(),
+        date_update: new Date(),
+        date_format,
         description
       };
 
       const storage = await AsyncStorage.getItem(COLLECTION_APPOINTMENTS);
       const appointments = storage ? JSON.parse(storage) : [];
 
-      await AsyncStorage.setItem(COLLECTION_APPOINTMENTS, JSON.stringify([...appointments, newAppointment]));
-      schedulePushNotification(
+      const scheduleIdentifier = await schedulePushNotification(
         'O tão aguardado momento chegou!!! 🎮',
         `Nós estamos te aguardando, entre no servidor do ${guild.name}`,
         newAppointment,
-        new Date(year, +month - 1, +day, +hour, +minute)
+        date_format
+      );
+
+      await AsyncStorage.setItem(
+        COLLECTION_APPOINTMENTS,
+        JSON.stringify([...appointments, { ...newAppointment, id: scheduleIdentifier }])
       );
 
       navigation.dispatch(CommonActions.navigate({ name: 'Home' }));

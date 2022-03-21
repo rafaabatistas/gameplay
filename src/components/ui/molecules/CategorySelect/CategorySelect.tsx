@@ -21,6 +21,7 @@ export const CategorySelect = ({ categorySelected, setCategory, hasCheckBox = fa
         title={title}
         hasCheckBox={hasCheckBox}
         onPress={() => setCategory(id)}
+        opacity={categorySelected !== '' ? id === categorySelected : true}
         checked={id === categorySelected}
       />
     ))}

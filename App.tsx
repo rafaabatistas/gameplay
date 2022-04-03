@@ -30,7 +30,7 @@ export default function App() {
   return fontsLoaded ? (
     <AuthProvider>
       <ThemeProvider theme={theme}>
-        <StatusBar barStyle="light-content" backgroundColor="transparent" translucent />
+        <StatusBar backgroundColor="transparent" translucent />
         <Container>
           <Routes />
         </Container>

@@ -5,7 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import type User from '../@types/user';
 
 import api from '../services/api';
-import { userInfoFormatting } from '../utils/functions';
+import { userInfoFormatting, generateExpirationDate } from '../utils/functions';
+import { checkTokenValidity } from '../utils/validate';
 import { COLLECTION_USERS } from '../configs/database';
 
 const { SCOPE } = process.env;
@@ -24,6 +25,7 @@ export type AuthorizationResponse = AuthSession.AuthSessionResult & {
   params: {
     access_token?: string;
     error?: string;
+    expires_in?: string;
   };
 };
 
@@ -44,7 +46,9 @@ export const AuthProvider = (props: { children: JSX.Element }) => {
         api.defaults.headers.common['authorization'] = `Bearer ${params.access_token}`;
 
         const user = userInfoFormatting(userInfo);
-        const userData = { ...user, token: params.access_token };
+        const secondsLimit = '604800';
+        const tokenExpirationDate = new Date(generateExpirationDate(params.expires_in ?? secondsLimit));
+        const userData = { ...user, token: params.access_token, expires_token_in: tokenExpirationDate };
 
         await AsyncStorage.setItem(COLLECTION_USERS, JSON.stringify(userData));
         setUser(userData);
@@ -67,7 +71,13 @@ export const AuthProvider = (props: { children: JSX.Element }) => {
 
     if (storage) {
       const userLogged = JSON.parse(storage) as User;
+      const tokenIsValid = checkTokenValidity(userLogged.expires_token_in);
       api.defaults.headers.common['authorization'] = `Bearer ${userLogged.token}`;
+
+      if (tokenIsValid) {
+        signOut();
+        return;
+      }
 
       setUser(userLogged);
     }
